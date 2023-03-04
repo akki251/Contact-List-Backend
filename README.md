@@ -21,7 +21,7 @@ This will install all the dependencies required for the project.
 To start the server, run:
 
 ```bash
-npm start
+npm run dev
 ```
 
 This will launch the server on port 3000 by default. You can change the port by setting the `PORT` environment variable.
