@@ -4,6 +4,7 @@ const { createMember } = require("../controllers/memberController");
 const Member = require("../models/Member");
 const router = express.Router();
 
+
 router.route("/all").get(async (req, res) => {
   const allUsers = await Member.find().populate("contacts");
 

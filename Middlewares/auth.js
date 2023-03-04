@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 module.exports = catchAsync(async (req, res, next) => {
   let token = null;
+
+  // checking token in the header
   if (req.headers?.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   }
@@ -19,8 +21,7 @@ module.exports = catchAsync(async (req, res, next) => {
     }
   );
 
-  
-
+  // attaching user profile on the request for further use
   req.profile = decoded;
   next();
 });

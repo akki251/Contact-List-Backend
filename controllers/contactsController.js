@@ -6,12 +6,14 @@ const Member = require("../models/Member");
 exports.getAllContacts = catchAsync(async (req, res, next) => {
   const profile = req.profile;
   let allContacts;
+
   // check new user
   const ifUserExists = await Member.findOne({ email: profile.email });
 
   if (ifUserExists) {
     allContacts = await ifUserExists.populate("contacts");
   } else {
+    // create new user
     const newUser = await Member.create({
       name: profile.name,
       email: profile.email,
@@ -51,6 +53,7 @@ exports.createContact = catchAsync(async (req, res, next) => {
 exports.deleteContact = catchAsync(async (req, res, next) => {
   const { id: contactId } = req.params;
 
+  // if id is not a valid mongoDB id
   if (!mongoose.Types.ObjectId.isValid(contactId)) {
     return next(new Error("Invalid contact ID"));
   }

@@ -3,6 +3,7 @@ const contactController = require("../controllers/contactsController");
 const auth = require("../Middlewares/auth");
 const router = express.Router();
 
+// using it as a middleware for protecting the routes
 router.use(auth);
 
 router.route("/all").get(contactController.getAllContacts);
