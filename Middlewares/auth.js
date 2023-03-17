@@ -2,6 +2,7 @@ const catchAsync = require("../Utils/catchAsyncError");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { log } = require("console");
+const axios = require("axios");
 module.exports = catchAsync(async (req, res, next) => {
   let token = null;
 
@@ -14,11 +15,11 @@ module.exports = catchAsync(async (req, res, next) => {
     return next(new Error("Please login to get access"));
   }
 
-  const tokenResponse = await fetch(
+  const tokenResponse = await axios.get(
     "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
   );
 
-  const tokenData = await tokenResponse.json();
+  const tokenData = tokenResponse.data;
 
   const decoded = await promisify(jwt.verify)(
     token,
